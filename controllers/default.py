@@ -9,13 +9,14 @@ def index():
     return dict()
 
 def play():
+    import os
     import requests
     from BeautifulSoup import BeautifulStoneSoup as bss
     import gluon.contrib.simplejson as sj
     
     lastfmuser = request.vars.lastfmuser
-    print 'lastfmuser', lastfmuser
-    api_key = '7867042b41245ee87265bdca69f4ee9e'
+    # print 'lastfmuser', lastfmuser
+    api_key = os.environ['LASTFM_API_KEY']
     
     url = 'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=%s&api_key=%s&limit=10' % (lastfmuser, api_key)
     artists = requests.get(url).content
