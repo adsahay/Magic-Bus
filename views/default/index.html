@@ -1,0 +1,69 @@
+{{extend 'layout.html'}}
+
+<div id="mb_video">
+    <p style="display:none;">Fetching...</p>
+    <h3 id="mb_title"></h3>
+    <iframe id="mb_player" width="720" height="480" frameborder="0" src="about://blank" allowfullscreen></iframe>
+</div>
+<hr/>
+<h2>What's The Magic Bus?</h2>
+
+<p>Named after <a href="http://youtu.be/-2kgsVmd4bE">a great song by The Who</a>, this was made as part of a session on <strong>Rapid Prototyping</strong> for startups at <a href="http://tlabs.indiatimes.com">TLabs</a> by <a href="http://sahay.co/about">me</a>. It takes a <a href="http://last.fm">last.fm</a> username, and based on the top artists scrobbled for that user, puts together a <a href="http://www.youtube.com">YouTube</a> playlist. The idea was to demonstrate how <a href="http://www.web2py.com">web2py</a> (Python-based web framework) could be used for quickly putting together a basic, functional app from scratch in an hour. The source code of this app is available on Github.</p>
+
+<small><strong>Disclaimer</strong>: No additional documentation, support or any feature requests should be expected.</small>
+
+<script>
+// This code loads the IFrame Player API code asynchronously.
+var ytList = [];
+var i = -1;    // current video index
+var current = -1;    // tracks what is playing currently
+var tag = document.createElement('script');
+tag.src = "http://www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var ytBaseUrl = 'http://www.youtube.com/embed/';
+var ytParams = '?enablejsapi=1&autoplay=1';
+
+// Calls /default/play to fetch ids for Youtube
+function fetchPlaylist() {
+    var u = $('#lastfmuser').val();
+    $('#mb_video > p').show();
+    // fetch youtube ids
+    $.get("{{=URL(request.application, 'default', 'play.json')}}"+'?lastfmuser='+u,
+        function(data) {
+            $('#mb_video > p').hide();
+            // store array of youtube ids in global var
+            ytList = data.yt_list;
+            console.log(ytList);
+            ++i;
+            current = ytList[i].yt_id;
+            ytUrl = ytBaseUrl+current+ytParams;
+            $('#mb_player').attr('src', ytUrl);
+            $('#mb_title').text(ytList[i].title);
+        });
+}
+
+var ytPlayer; // the youtube player
+// this allows us to capture youtube player events
+function onYouTubePlayerAPIReady() {
+    ytPlayer = new YT.Player('mb_player', {
+            events: {
+                'onStateChange': onPlayerStateChange,
+                'onError':skip
+            }    
+        });
+}
+
+function onPlayerStateChange(state) {
+    if (state.data == YT.PlayerState.ENDED)
+        skip();
+}
+
+// skips to next video
+function skip() {
+    ++i; current = ytList[i].yt_id;
+    $('#mb_title').text(ytList[i].title);
+    current = ytList[i].yt_id;
+    ytPlayer.loadVideoById(current);
+}
+</script>
