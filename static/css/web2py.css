@@ -69,7 +69,7 @@ body {
     background-color: #ECECEC;
 }
 .header {
-    // background: url('../images/bg.png');
+    // background: url('../images/background.png');
 }
 
 
@@ -353,21 +353,50 @@ color: #222;
  */
 #title {
     width: 100%;
-    min-height: 80%;
-    background: black;
+    min-height: 90%;
     position: absolute; top: 0px;
-    opacity: 0.5;
+}
+
+#title img {
+    position: absolute; bottom: 10px; left: 100px;
 }
 
 #inputform {
     width: 100%;
-    height: 20%;
+    height: 10%;
     position: absolute; bottom: 0px;
     text-align: center;
 }
 
+img#unicorn {
+    margin-left: -60px;
+}
+
+img#btn {
+    margin-left:-60px;
+    position: relative; bottom: 66px;
+    background: transparent;
+    border:none;
+    cursor: pointer;
+}
+
+input#lastfmuser {
+    width: 30%;
+    border-radius: 12px;
+    background: black;
+    border: none;
+    text-color: #999999;
+    padding: 8px;
+    height: 24px;
+    position: relative; bottom: 80px;
+    font-weight: bold;
+}
+
 .header { display: none; }
 div.main { 
-    background: url('../images/bg.png') no-repeat; 
+    background: url('../images/background.png') no-repeat; 
     background-size: 100% auto;
 }
+
+h3#mb_title { color: white; }
+div#mb_video { text-align: center; }

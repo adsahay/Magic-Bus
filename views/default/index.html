@@ -1,15 +1,16 @@
 {{extend 'layout.html'}}
 
-<div id="title"> </div>
-<div id="inputform" class="center">
-    <input type="text" name="lastfmuser" id="lastfmuser"></input>
-    <input type="button" value="Play" onclick="fetchPlaylist();"/>
-</div>
-
 <div id="mb_video">
-    <p style="display:none;">Fetching...</p>
     <h3 id="mb_title"></h3>
     <iframe id="mb_player" width="720" height="480" frameborder="0" src="about://blank" allowfullscreen></iframe>
+</div>
+<div id="title">
+    <img src="{{=URL(request.application, 'static/images', 'header.png')}}" width="760px" />
+</div>
+<div id="inputform" class="center">
+    <img id="unicorn" src="{{=URL(request.application, 'static/images', 'unicorn.png')}}" width="118px" />
+    <input type="text" name="lastfmuser" id="lastfmuser" value='Enter your last.fm username'></input>
+    <img id="btn" src="{{=URL(request.application, 'static/images', 'button.png')}}" width="36px" onclick="fetchPlaylist();"/>
 </div>
 
 <script>
@@ -27,14 +28,15 @@ var ytParams = '?enablejsapi=1&autoplay=1';
 // Calls /default/play to fetch ids for Youtube
 function fetchPlaylist() {
     var u = $('#lastfmuser').val();
-    $('#mb_video > p').show();
     // fetch youtube ids
-    $.get("{{=URL(request.application, 'default', 'play.json')}}"+'?lastfmuser='+u,
+    $.get("{{=URL(request.application, 'default', 'play')}}"+'?lastfmuser='+u,
         function(data) {
-            $('#mb_video > p').hide();
+            $('#inputform').hide();
+            $('#title').hide();
+
             // store array of youtube ids in global var
-            ytList = data.yt_list;
-            console.log(ytList);
+            ytList = JSON.parse(data)['yt_list'];
+            // console.log(data);
             ++i;
             current = ytList[i].yt_id;
             ytUrl = ytBaseUrl+current+ytParams;
