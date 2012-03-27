@@ -4,8 +4,6 @@ This is a simple mashup of [Last.fm][1] and [YouTube][2] to demonstrate how [web
 
 ## TODO
 
-- Fix landing page interface.
-- Randomize youtube video results.
 - Add a "Skip" button/icon/link.
 - Add INSTALL instructions.
 
