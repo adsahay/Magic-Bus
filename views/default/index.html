@@ -1,17 +1,16 @@
 {{extend 'layout.html'}}
 
 <div id="mb_video">
+    <p style="display:none;">Fetching...</p>
     <h3 id="mb_title"></h3>
     <iframe id="mb_player" width="720" height="480" frameborder="0" src="about://blank" allowfullscreen></iframe>
 </div>
-<div id="title">
-    <img src="{{=URL(request.application, 'static/images', 'header.png')}}" width="760px" />
-</div>
-<div id="inputform" class="center">
-    <img id="unicorn" src="{{=URL(request.application, 'static/images', 'unicorn.png')}}" width="118px" />
-    <input type="text" name="lastfmuser" id="lastfmuser" value='Enter your last.fm username'></input>
-    <img id="btn" src="{{=URL(request.application, 'static/images', 'button.png')}}" width="36px" onclick="fetchPlaylist();"/>
-</div>
+<hr/>
+<h2>What's The Magic Bus?</h2>
+
+<p>Named after <a href="http://youtu.be/-2kgsVmd4bE">a great song by The Who</a>, this was made as part of a session on <strong>Rapid Prototyping</strong> for startups at <a href="http://tlabs.indiatimes.com">TLabs</a> by <a href="http://sahay.co/about">me</a>. It takes a <a href="http://last.fm">last.fm</a> username, and based on the top artists scrobbled for that user, puts together a <a href="http://www.youtube.com">YouTube</a> playlist. The idea was to demonstrate how <a href="http://www.web2py.com">web2py</a> (Python-based web framework) could be used for quickly putting together a basic, functional app from scratch in an hour. The source code of this app is available on Github.</p>
+
+<small><strong>Disclaimer</strong>: No additional documentation, support or any feature requests should be expected.</small>
 
 <script>
 // This code loads the IFrame Player API code asynchronously.

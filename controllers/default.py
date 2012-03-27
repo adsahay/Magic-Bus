@@ -15,11 +15,12 @@ def play():
     import random
 
     session.forget()
+    
     lastfmuser = request.vars.lastfmuser
     # print 'lastfmuser', lastfmuser
     api_key = os.environ['LASTFM_API_KEY']
     
-    url = 'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=%s&api_key=%s&limit=20' % (lastfmuser, api_key)
+    url = 'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=%s&api_key=%s&limit=10' % (lastfmuser, api_key)
     artists = requests.get(url).content
     artists = bss(artists)
     
@@ -28,6 +29,9 @@ def play():
     print artist_names
     
     yt_url = 'http://gdata.youtube.com/feeds/api/videos?q=%s&max-results=5&category=Music&v=2&alt=json'
+    # print artist_names
+    
+    yt_url = 'http://gdata.youtube.com/feeds/api/videos?q=%s&max-results=1&category=Music&v=2&alt=json'
     yt_list = []
     
     for artist in artist_names:

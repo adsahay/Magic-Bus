@@ -72,7 +72,7 @@
     <div class="topbar">
       <div class="container">    
         <div class="sixteen columns">
-          <!-- <div id="navbar"></div> -->
+          <div id="navbar">{{include 'navbar.html'}}</div>
           {{is_mobile=request.user_agent().is_mobile}}
           <div id="menu">{{=MENU(response.menu, _class='mobile-menu' if is_mobile else 'sf-menu',mobile=is_mobile)}}
           </div>
@@ -82,6 +82,7 @@
     
     <div class="flash">{{=response.flash or ''}}</div>
     
+    <!--
     <div class="header">
       <div class="container">         
         <div class="sixteen columns">
@@ -91,15 +92,11 @@
           <h5>{{=response.subtitle or ''}}</h5>
         </div>
         <div class="sixteen columns">
-          <div class="statusbar clearfix">
-            {{block statusbar}}
-            <div class="breadcrumbs">{{=request.function.replace('_', ' ').title()}}</div>
-            {{end}}
-          </div>
         </div>
       </div>
     </div>
-
+    -->
+    
     <div class="main">
       <div class="container">                 
         {{if left_sidebar_enabled:}}
