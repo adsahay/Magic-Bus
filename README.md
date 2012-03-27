@@ -2,7 +2,8 @@
 
 This is a simple mashup of [Last.fm][1] and [YouTube][2] to demonstrate how [web2py][3] can be used to quickly create a web app prototype from scratch.
 
-# TODO
+## TODO
+=======
 
 - Fix landing page interface.
 - Randomize youtube video results.

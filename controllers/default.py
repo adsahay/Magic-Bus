@@ -9,10 +9,12 @@ def index():
     return dict()
 
 def play():
-    import os
-    import requests
+    import os, requests
     from BeautifulSoup import BeautifulStoneSoup as bss
     import gluon.contrib.simplejson as sj
+    import random
+
+    session.forget()
     
     lastfmuser = request.vars.lastfmuser
     # print 'lastfmuser', lastfmuser
@@ -23,6 +25,10 @@ def play():
     artists = bss(artists)
     
     artist_names = artists.findAll('name')
+    random.shuffle(artist_names, random.random)
+    print artist_names
+    
+    yt_url = 'http://gdata.youtube.com/feeds/api/videos?q=%s&max-results=5&category=Music&v=2&alt=json'
     # print artist_names
     
     yt_url = 'http://gdata.youtube.com/feeds/api/videos?q=%s&max-results=1&category=Music&v=2&alt=json'
@@ -33,11 +39,13 @@ def play():
         # print 'searching: ' + a
         video_json = requests.get(yt_url % a).content
         video = sj.loads(video_json)
-        title = video['feed']['entry'][0]['media$group']['media$title']
-        yt_video_id = video['feed']['entry'][0]['media$group']['yt$videoid']
+        # randomly pick one
+        index = random.randint(0,4)
+        title = video['feed']['entry'][index]['media$group']['media$title']
+        yt_video_id = video['feed']['entry'][index]['media$group']['yt$videoid']
         yt_list.append({'title':title['$t'], 'yt_id':yt_video_id['$t']})
         
-    return dict(yt_list=yt_list)
+    return response.json({'yt_list':yt_list})
     
 def error():
     return dict()

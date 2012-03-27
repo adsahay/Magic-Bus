@@ -27,14 +27,15 @@ var ytParams = '?enablejsapi=1&autoplay=1';
 // Calls /default/play to fetch ids for Youtube
 function fetchPlaylist() {
     var u = $('#lastfmuser').val();
-    $('#mb_video > p').show();
     // fetch youtube ids
-    $.get("{{=URL(request.application, 'default', 'play.json')}}"+'?lastfmuser='+u,
+    $.get("{{=URL(request.application, 'default', 'play')}}"+'?lastfmuser='+u,
         function(data) {
-            $('#mb_video > p').hide();
+            $('#inputform').hide();
+            $('#title').hide();
+
             // store array of youtube ids in global var
-            ytList = data.yt_list;
-            console.log(ytList);
+            ytList = JSON.parse(data)['yt_list'];
+            // console.log(data);
             ++i;
             current = ytList[i].yt_id;
             ytUrl = ytBaseUrl+current+ytParams;
