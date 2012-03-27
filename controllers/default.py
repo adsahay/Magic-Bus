@@ -25,7 +25,7 @@ def play():
     
     artist_names = artists.findAll('name')
     random.shuffle(artist_names, random.random)
-    print artist_names
+    # print artist_names
     
     yt_url = 'http://gdata.youtube.com/feeds/api/videos?q=%s&max-results=5&category=Music&v=2&alt=json'
     yt_list = []

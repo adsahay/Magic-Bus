@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 
 <div id="mb_video">
-    <h3 id="mb_title"></h3>
+    <!-- <h3 id="mb_title"></h3> -->
     <iframe id="mb_player" width="720" height="480" frameborder="0" src="about://blank" allowfullscreen></iframe>
 </div>
 <div id="title">
@@ -9,7 +9,7 @@
 </div>
 <div id="inputform" class="center">
     <img id="unicorn" src="{{=URL(request.application, 'static/images', 'unicorn.png')}}" width="118px" />
-    <input type="text" name="lastfmuser" id="lastfmuser" value='Enter your last.fm username'></input>
+    <input type="text" name="lastfmuser" id="lastfmuser" value='Enter your last.fm username' onfocus="$('#lastfmuser').val('');"></input>
     <img id="btn" src="{{=URL(request.application, 'static/images', 'button.png')}}" width="36px" onclick="fetchPlaylist();"/>
 </div>
 
@@ -28,6 +28,7 @@ var ytParams = '?enablejsapi=1&autoplay=1';
 // Calls /default/play to fetch ids for Youtube
 function fetchPlaylist() {
     var u = $('#lastfmuser').val();
+    $('#lastfmuser').val('Fetching...');
     // fetch youtube ids
     $.get("{{=URL(request.application, 'default', 'play')}}"+'?lastfmuser='+u,
         function(data) {
@@ -41,7 +42,7 @@ function fetchPlaylist() {
             current = ytList[i].yt_id;
             ytUrl = ytBaseUrl+current+ytParams;
             $('#mb_player').attr('src', ytUrl);
-            $('#mb_title').text(ytList[i].title);
+            // $('#mb_title').text(ytList[i].title);
         });
 }
 
@@ -64,7 +65,7 @@ function onPlayerStateChange(state) {
 // skips to next video
 function skip() {
     ++i; current = ytList[i].yt_id;
-    $('#mb_title').text(ytList[i].title);
+    // $('#mb_title').text(ytList[i].title);
     current = ytList[i].yt_id;
     ytPlayer.loadVideoById(current);
 }
